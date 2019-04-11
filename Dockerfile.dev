@@ -1,0 +1,17 @@
+# Initial docker image. This uses node
+FROM node:alpine
+
+# This creates a dir inside the container
+WORKDIR '/usr/react-app'
+
+# Copies package.json from local dir to WORKDIR
+COPY package.json .
+
+# Runs a command in container, installs npm
+RUN npm install
+
+# Copies all files in local to WORKDIR root
+COPY . .
+
+# Command to run when container starts
+CMD ["npm", "run", "start"]

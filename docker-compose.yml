@@ -1,0 +1,28 @@
+version: '3'
+# Containers, can assign any name e.g. react-app
+services:
+  react-app:
+     # Where to get files from
+    build:
+        # Initial dir, in this case, same dir
+        context: .
+        # Name of docker file
+        dockerfile: Dockerfile.dev
+    # Port mapping, local machine to container
+    ports: 
+        - "3000:3000"
+    # Mount directories to container
+    volumes:
+        # Use this dir inside container for node_modules
+        - /usr/react-app/node_modules
+        # Mount local dir to /usr/react-app
+        - .:/usr/react-app
+
+  tests:
+    build:
+        context: .
+        dockerfile: Dockerfile.dev
+    volumes:
+        - /usr/react-app/node_modules
+        - .:/usr/react-app
+    command: ["npm", "run", "test"]
